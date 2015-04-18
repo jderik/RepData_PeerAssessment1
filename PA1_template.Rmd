@@ -115,31 +115,16 @@ median(totalstepsdata$steps)
 * ##### The impact of imputing missing data on the estimates is that the histogram has now resettled with changes in the values for the date ranges. The Mean and Median are now equal as printed below the histogram#####
 
 
+#### E. Are there differences in activity patterns between weekdays and weekends? ####
 
+1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
-=======
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
-
-## Loading and preprocessing the data
+```{r differences, echo=TRUE}
 
 
 
-## What is mean total number of steps taken per day?
 
+```
 
-
-## What is the average daily activity pattern?
-
-
-
-## Imputing missing values
-
-
-
-## Are there differences in activity patterns between weekdays and weekends?
->>>>>>> 80edf39c3bb508fee88e3394542f967dd3fd3270
