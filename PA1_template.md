@@ -1,5 +1,4 @@
 ---
-<<<<<<< HEAD
 title: "ReproducibleResearch_Assessment01"
 author: "JD"
 date: "Wednesday, April 15, 2015"
@@ -153,7 +152,28 @@ median(totalstepsdata$steps)
 
 1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
+```r
+daynames <- weekdays(as.Date(ActivityNew$date))
+for (i in 1:nrow(ActivityNew))
+  {
+    if(daynames[i] %in% c('Sunday', 'Saturday'))
+      {
+      ActivityNew$daytype[i]<-'Weekend'
+      }
+    else
+      {
+        ActivityNew$daytype[i]<-'Weekday'
+      }
+  }
+```
 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
 
+```r
+library(lattice)
+ActivityPanelData <- ddply( ActivityNew, .(interval , daytype), summarize, newstepsmeanval=mean(steps,na.rm=TRUE))
+## http://www.statmethods.net/advgraphs/layout.html
+ xyplot(newstepsmeanval~interval|daytype, data=ActivityPanelData, type='l', layout=c(1,2))
+```
 
+![plot of chunk panel](figure/panel-1.png) 
