@@ -1,4 +1,123 @@
 ---
+<<<<<<< HEAD
+title: "ReproducibleResearch_Assessment01"
+author: "JD"
+date: "Wednesday, April 15, 2015"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+#### A. Loading and preprocessing data
+
+*Assuming data is Unzipped
+```{r loader, echo=TRUE}
+
+Activity<-read.csv("activity.csv")
+
+
+```
+#### B. What is mean total number of steps taken per day?
+1. Calculate the total number of steps taken per day
+2. Make a histogram of the total number of steps taken each day
+```{r TotalSteps, echo=TRUE}
+library(ggplot2)
+totalstepsdata <- aggregate(steps~date, data=Activity,FUN=sum )
+g<- ggplot(totalstepsdata, aes( steps))
+g<-g+ geom_histogram(binwidth=2000)+ xlab("Date")+ ylab("Steps") + ggtitle("Total Steps Per day")
+
+print(g)
+
+```
+
+3. Calculate and report the mean and median of the total number of steps taken per day
+
+* _The Mean is_
+```{r Mean, echo=TRUE}
+mean(totalstepsdata$steps)
+
+```
+* _The Median is_
+```{r Median, echo=TRUE}
+median(totalstepsdata$steps)
+
+```
+
+#### C. What is the average daily activity pattern?
+
+1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+
+```{r timeseries, echo=TRUE}
+
+library(plyr)
+avg5sec<-ddply(Activity,.(interval) ,summarize,  stepsmeanval=mean(steps,na.rm=TRUE))
+ plot(avg5sec$interval, avg5sec$stepsmeanval, type="l")
+
+
+```
+
+2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
+```{r echo=TRUE}
+avg5sec[which.max(avg5sec$stepsmeanval),]
+
+```
+
+#### D. Imputing Missing Values.
+
+1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+* _Checks the NA in field STEPS_
+``` {r imputation, echo=TRUE}
+sum(is.na(Activity$steps))
+```
+
+
+2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+* _Use the mean values in the previous question and fill it in place of NAs in the new dataset_
+``` {r strategy, echo=TRUE}
+ActivityNew <- Activity
+for (i in 1:nrow(ActivityNew))
+  {
+    if(is.na(ActivityNew$steps[i]))
+      {
+        ActivityNew$steps[i] <- avg5sec[which(ActivityNew$interval[i] == avg5sec$interval), ]$stepsmeanval
+      }
+  }
+
+sum(is.na(ActivityNew))
+
+```
+
+
+4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
+
+```{r NewDataset, echo=TRUE}
+
+totalstepsdata <- aggregate(steps~date, data=ActivityNew,FUN=sum )
+g<- ggplot(totalstepsdata, aes( steps))
+g<-g+ geom_histogram(binwidth=2000)+ xlab("Date")+ ylab("Steps") + ggtitle("Total Steps Each Day")
+
+print(g)
+
+
+mean(totalstepsdata$steps)
+
+median(totalstepsdata$steps)
+
+```
+
+
+* ##### Yes the values differ from the estimates from the first part of the assignment.#####
+* ##### The impact of imputing missing data on the estimates is that the histogram has now resettled with changes in the values for the date ranges. The Mean and Median are now equal as printed below the histogram#####
+
+
+
+
+=======
 title: "Reproducible Research: Peer Assessment 1"
 output: 
   html_document:
@@ -23,3 +142,4 @@ output:
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+>>>>>>> 80edf39c3bb508fee88e3394542f967dd3fd3270
